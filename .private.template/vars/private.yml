@@ -1,0 +1,16 @@
+host: example.com
+dc: dc=example,dc=com
+ldapPassword: yourSuperSecretPassword 
+ldapPasswordSize: 24  # The length ldapPassword
+automountMachine: nfs.example.com
+ldapServer: ldap://ldap.example.com
+gSuffix: ou=Groups
+uSuffix: ou=Users
+mSuffix: ou=Machines
+
+auth_include_create_user_and_groups: True 
+auth_include_create_indexes: True 
+auth_include_create_autofs: True 
+auth_include_create_automount: True 
+auth_include_create_sudo: True 
+auth_include_create_sudo_master: True 

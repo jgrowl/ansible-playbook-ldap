@@ -1,0 +1,13 @@
+---
+# This Playbook deploys OpenLDAP
+
+- hosts: auth
+  user: root
+  #sudo: True
+  vars_files:
+    - vars/main.yml
+    - vars/private.yml
+  tasks:
+    - include: tasks/main.yml
+  handlers:
+    - include: handlers/main.yml

@@ -1,0 +1,44 @@
+Verify everything works by entering:
+  sudo kadmin.local
+
+If that works, then type 'quit' out of kadmin
+
+# To Get ticket as a specified user
+kinit dan
+
+# To view ticket if successful
+klist
+
+# Add princ
+sudo kadmin.local -q "addprinc dan"
+
+# Add admin priciple (For adding nfs)
+sudo kadmin.local -q "addprinc dan/admin"
+
+# Add nfs principle
+kadmin -p dan/admin -q "addprinc -randkey nfs/$(hostname -f)"
+
+# Add nfs principle to keytab on client
+sudo kadmin -p dan/admin -q "ktadd nfs/$(hostname -f)"
+
+# Delete nfs principle
+kadmin -p dan/admin -q "delete_principal nfs/$(hostname -f)"
+
+# Remove from keytab
+sudo kadmin -p jgrowlands/admin -q "ktremove nfs/$(hostname -f)"
+
+# Add groups
+sudo ldapaddgroup domainadmins
+sudo ldapaddgroup domainusers
+
+#Add users to groups 
+sudo ldapadduser dan domainadmins
+sudo ldapaddusertogroup dan domainusers
+
+For kerberised ssh:
+sudo kadmin.local -q "addprinc -randkey host/neo.danbishop.org"
+sudo kadmin.local -q "ktadd host/neo.danbishop.org"
+
+For nfs support:
+sudo kadmin.local -q "addprinc -randkey nfs/neo.danbishop.org"
+sudo kadmin.local -q "ktadd nfs/neo.danbishop.org"

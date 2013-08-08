@@ -1,0 +1,38 @@
+---
+
+- name: install kerberos packages
+  action: apt pkg=$item state=installed
+  with_items:
+    - krb5-kdc
+    - krb5-admin-server
+  tags: krb
+
+- name: ensure there is a ansible directory
+  file: path=~root/.ansible state=directory owner=root group=root
+  tags: krb
+
+- name: ensure krb5.conf exists
+  template: src=templates/etc/krb5.conf.j2 dest=/etc/krb5.conf owner=root group=root
+  tags: krb
+
+#- name: create new realm (This can take a long time)
+#  shell: krb5_newrealm && touch ~root/.ansible/create-realm creates=~root/.ansible/create-realm
+#  tags: krb
+
+- name: ensure realm is created (This can take a very long time)
+  shell: kdb5_util -r $realm -P $krbMasterPassword create -s && touch ~root/.ansible/create-realm creates=~root/.ansible/create-realm
+  tags: krb
+
+- name: ensure krb5-kdc is started
+  service: name=krb5-kdc state=started
+  tags: krb
+
+- name: ensure krb5-admin-server is started
+  service: name=krb5-admin-server state=started
+  tags: krb
+
+- name: ensure kadm5.acl exists
+  template: src=templates/etc/krb5kdc/kadm5.acl.j2 dest=/etc/krb5kdc/kadm5.acl owner=root group=root
+  notify:
+    - restart krb5-admin-server 
+  tags: krb

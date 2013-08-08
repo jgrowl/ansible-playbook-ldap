@@ -1,0 +1,15 @@
+# This is used to store files that indicate that an operation has been run. Note that if you change this after you have
+# run the script, you may clobber your previous install and/or other bad things. I do not know if if /etc/ansible is
+# the best place to put these files but I wanted to avoid home directories in case the user that runs ansible ever changes.
+auth_ansible_dir: /etc/ansible/packages
+
+# Note I am prefixing this plugin with my own package name in case it may ever conflict with someone elses auth package.
+auth_dir: $auth_ansible_dir/spectr.us/auth
+
+# These files tell ansible whether or not the associated command was run before.
+auth_create_user_and_groups_done: $auth_dir/create-users-and-groups
+auth_create_indexes_done: $auth_dir/create-indexes
+auth_create_autofs_done: $auth_dir/create-autofs
+auth_create_automount_done: $auth_dir/create-automount
+auth_create_sudo_done: $auth_dir/create-sudo
+auth_create_sudo_master_done: $auth_dir/create-sudo-master

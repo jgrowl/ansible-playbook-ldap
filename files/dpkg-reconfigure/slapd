@@ -1,0 +1,12 @@
+slapd/internal/generated_adminpw password        
+slapd/password2 $ldapPassword 
+slapd/password1 $ldapPassword 
+slapd/allow_ldap_v2 false
+shared/organization $host 
+slapd/no_configuration false
+slapd/move_old_database true
+slapd/dump_database_destdir /var/backups/slapd-VERSION
+slapd/purge_database true
+slapd/domain $host
+slapd/backend HDB
+slapd/dump_database when needed
