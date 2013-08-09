@@ -1,9 +1,9 @@
-dn: ou=sudoers,{{dc}}
+dn: ou=sudoers,{{ldap_dc}}
 objectclass: organizationalUnit
 objectclass: top
 ou: sudoers
 
-dn: cn=defaults,ou=sudoers,{{dc}}
+dn: cn=defaults,ou=sudoers,{{ldap_dc}}
 objectClass: top
 objectClass: sudoRole
 cn: defaults
@@ -12,7 +12,7 @@ sudoOption: env_reset
 sudoOption: mail_badpass
 sudoOrder: 1
 
-dn: cn=root,ou=sudoers,{{dc}}
+dn: cn=root,ou=sudoers,{{ldap_dc}}
 objectClass: top
 objectClass: sudoRole
 cn: root
@@ -23,7 +23,7 @@ sudoRunAsGroup: ALL
 sudoCommand: ALL
 sudoOrder: 2
 
-dn: cn=%admin,ou=sudoers,{{dc}}
+dn: cn=%admin,ou=sudoers,{{ldap_dc}}
 objectClass: top
 objectClass: sudoRole
 cn: %admin
@@ -33,7 +33,7 @@ sudoRunAsUser: ALL
 sudoCommand: ALL
 sudoOrder: 3
 
-dn: cn=%sudo,ou=sudoers,{{dc}}
+dn: cn=%sudo,ou=sudoers,{{ldap_dc}}
 objectClass: top
 objectClass: sudoRole
 cn: %sudo
@@ -44,7 +44,7 @@ sudoRunAsGroup: ALL
 sudoCommand: ALL
 sudoOrder: 4
 
-dn: cn=%domainadmins,ou=sudoers,{{dc}}
+dn: cn=%domainadmins,ou=sudoers,{{ldap_dc}}
 objectClass: top
 objectClass: sudoRole
 cn: %domainadmins
