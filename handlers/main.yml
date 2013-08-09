@@ -1,4 +1,1 @@
 ---
-
-- name: restart krb5-admin-server 
-  service: name=krb5-admin-server state=restarted
