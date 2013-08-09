@@ -1,9 +1,9 @@
 ---
 # This Playbook deploys OpenLDAP
 
-- hosts: auth
-  user: root
-  #sudo: True
+- hosts: ldap
+  user: $global_user
+  sudo: $global_use_sudo
   vars_files:
     - vars/main.yml
     - vars/private.yml
