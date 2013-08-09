@@ -56,7 +56,7 @@
     - auth
 
 - name: ldap | Install automount
-  shell: ldapadd -w $ldapPassword -x -D cn=admin,$ldap_dc -f create_automount.ldif && touch $ldap_create_automount_done chdir=/tmp creates=$ldap_create_automount_done
+  shell: ldapadd -w $ldap_password -x -D cn=admin,$ldap_dc -f create_automount.ldif && touch $ldap_create_automount_done chdir=/tmp creates=$ldap_create_automount_done
   when: ldap_include_create_automount
   tags: 
     - ldap
@@ -84,7 +84,7 @@
     - auth
 
 - name: ldap | Install sudo master
-  shell: ldapadd -w $ldapPassword -x -D cn=admin,$ldap_dc -f create_sudo_master.ldif && touch $ldap_create_sudo_master_done chdir=/tmp creates=$ldap_create_sudo_master_done
+  shell: ldapadd -w $ldap_password -x -D cn=admin,$ldap_dc -f create_sudo_master.ldif && touch $ldap_create_sudo_master_done chdir=/tmp creates=$ldap_create_sudo_master_done
   when: ldap_include_create_sudo_master
   tags: 
     - ldap
