@@ -47,12 +47,6 @@
     - ldap
     - auth
 
-- name: ldap | ensure domainadmins exists
-  template: src=root/etc/sudoers.d/domainadmins dest=/etc/sudoers.d/domainadmins owner=root group=root mode=0440
-  tags: 
-    - ldap
-    - auth
-
 # This is really goofy but editing the secrets file in vims leaves an extra space at the end. Not sure what all editors do this
 # If your editor does not do this then this command will mess up your file.
 - name: ldap | ensure ldap.secret has no trailing space
