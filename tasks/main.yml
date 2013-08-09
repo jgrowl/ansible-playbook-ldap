@@ -1,12 +1,12 @@
 ---
 
-- name: Make an ansible directory for remembering what we previously run
+- name: ldap | Make an ansible directory for remembering what we previously run
   file: path=$ldap_done_dir state=directory owner=root group=root
   tags: 
     - ldap
     - auth
 
-- name: install ldap packages
+- name: ldap | install ldap packages
   apt: pkg=$item state=installed
   with_items:
     - slapd 
@@ -16,24 +16,38 @@
     - ldap
     - auth
 
-- name: Configure slapd
-  dpkg_reconfigure: pkg=slapd answers='$FILE(files/dpkg-reconfigure/slapd)'
+- name: ldap | Configure slapd
+  dpkg_reconfigure: 
+    pkg: slapd 
+    answers:
+      slapd/internal/generated_adminpw: password     
+      slapd/password2: $ldap_password 
+      slapd/password1: $ldap_password 
+      slapd/allow_ldap_v2: false
+      shared/organization: $ldap_host 
+      slapd/no_configuration: false
+      slapd/move_old_database: true 
+      slapd/dump_database_destdir: /var/backups/slapd-VERSION
+      slapd/purge_database: true 
+      slapd/domain: $ldap_host
+      slapd/backend: HDB
+      slapd/dump_database: when needed
 
 - include: load-schema.yml
 
-- name: ensure ldapscripts.conf exists
+- name: ldap | ensure ldapscripts.conf exists
   template: src=templates/etc/ldapscripts/ldapscripts.conf.j2 dest=/etc/ldapscripts/ldapscripts.conf owner=root group=root
   tags: 
     - ldap
     - auth
 
-- name: ensure ldap.secret exists
+- name: ldap | ensure ldap.secret exists
   template: src=templates/etc/ldap.secret.j2 dest=/etc/ldap.secret owner=root group=root mode=0400
   tags: 
     - ldap
     - auth
 
-- name: ensure domainadmins exists
+- name: ldap | ensure domainadmins exists
   template: src=templates/etc/sudoers.d/domainadmins dest=/etc/sudoers.d/domainadmins owner=root group=root mode=0440
   tags: 
     - ldap
@@ -41,5 +55,5 @@
 
 # This is really goofy but editing the secrets file in vims leaves an extra space at the end. Not sure what all editors do this
 # If your editor does not do this then this command will mess up your file.
-- name: ensure ldap.secret has no trailing space
+- name: ldap | ensure ldap.secret has no trailing space
   command: truncate --size $ldapPasswordSize /etc/ldap.secret
