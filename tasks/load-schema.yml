@@ -1,91 +1,91 @@
 ---
 
 - name: Make an ansible directory for remembering what we previously run
-  file: path=$auth_dir state=directory owner=root group=root
+  file: path=$ldap_done_dir state=directory owner=root group=root
   tags: 
     - ldap
     - auth
 
 - name: Copy over the create users and group ldif 
   template: src=templates/tmp/create_users_and_groups.ldif.j2 dest=/tmp/create_users_and_groups.ldif owner=root group=root
-  when: auth_include_create_user_and_groups
+  when: ldap_include_create_user_and_groups
   tags: 
     - ldap 
     - auth 
 
 - name: Install users and groups 
-  shell: ldapadd -w $ldapPassword -x -D cn=admin,$dc -f create_users_and_groups.ldif && touch $auth_create_user_and_groups_done chdir=/tmp creates=$auth_create_user_and_groups_done
-  when: auth_include_create_user_and_groups
+  shell: ldapadd -w $ldap_password -x -D cn=admin,$ldap_dc -f create_users_and_groups.ldif && touch $ldap_create_user_and_groups_done chdir=/tmp creates=$ldap_create_user_and_groups_done
+  when: ldap_include_create_user_and_groups
   tags: 
     - ldap 
     - auth 
 
 - name: Copy over the indexes ldif
   template: src=templates/tmp/create_indexes.ldif.j2 dest=/tmp/create_indexes.ldif owner=root group=root
-  when: auth_include_create_indexes
+  when: ldap_include_create_indexes
   tags: 
     - ldap
     - auth
 
 - name: Install indexes
-  shell: ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f create_indexes.ldif && touch $auth_create_indexes_done chdir=/tmp creates=$auth_create_indexes_done
-  when: auth_include_create_indexes
+  shell: ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f create_indexes.ldif && touch $ldap_create_indexes_done chdir=/tmp creates=$ldap_create_indexes_done
+  when: ldap_include_create_indexes
   tags: 
     - ldap
     - auth
 
 - name: Copy over the autofs ldif
   template: src=templates/tmp/create_autofs.ldif.j2 dest=/tmp/create_autofs.ldif owner=root group=root
-  when: auth_include_create_autofs
+  when: ldap_include_create_autofs
   tags: 
     - ldap
     - auth
 
 - name: Install autofs
-  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f create_autofs.ldif && touch $auth_create_autofs_done chdir=/tmp creates=$auth_create_autofs_done
-  when: auth_include_create_autofs
+  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f create_autofs.ldif && touch $ldap_create_autofs_done chdir=/tmp creates=$ldap_create_autofs_done
+  when: ldap_include_create_autofs
   tags: 
     - ldap
     - auth
 
 - name: Copy over the automount ldif
   template: src=templates/tmp/create_automount.ldif.j2 dest=/tmp/create_automount.ldif owner=root group=root
-  when: auth_include_create_automount
+  when: ldap_include_create_automount
   tags: 
     - ldap
     - auth
 
 - name: Install automount
-  shell: ldapadd -w $ldapPassword -x -D cn=admin,$dc -f create_automount.ldif && touch $auth_create_automount_done chdir=/tmp creates=$auth_create_automount_done
-  when: auth_include_create_automount
+  shell: ldapadd -w $ldapPassword -x -D cn=admin,$dc -f create_automount.ldif && touch $ldap_create_automount_done chdir=/tmp creates=$ldap_create_automount_done
+  when: ldap_include_create_automount
   tags: 
     - ldap
     - auth
 
 - name: Copy over the sudo ldif
   template: src=templates/tmp/create_sudo.ldif.j2 dest=/tmp/create_sudo.ldif owner=root group=root
-  when: auth_include_create_sudo
+  when: ldap_include_create_sudo
   tags: 
     - ldap
     - auth
 
 - name: Install sudo
-  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f create_sudo.ldif && touch $auth_create_sudo_done chdir=/tmp creates=$auth_create_sudo_done
-  when: auth_include_create_sudo
+  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f create_sudo.ldif && touch $ldap_create_sudo_done chdir=/tmp creates=$ldap_create_sudo_done
+  when: ldap_include_create_sudo
   tags: 
     - ldap
     - auth
 
 - name: Copy over the sudo master ldif
   template: src=templates/tmp/create_sudo_master.ldif.j2 dest=/tmp/create_sudo_master.ldif owner=root group=root
-  when: auth_include_create_sudo_master
+  when: ldap_include_create_sudo_master
   tags:
     - ldap
     - auth
 
 - name: Install sudo master
-  shell: ldapadd -w $ldapPassword -x -D cn=admin,$dc -f create_sudo_master.ldif && touch $auth_create_sudo_master_done chdir=/tmp creates=$auth_create_sudo_master_done
-  when: auth_include_create_sudo_master
+  shell: ldapadd -w $ldapPassword -x -D cn=admin,$dc -f create_sudo_master.ldif && touch $ldap_create_sudo_master_done chdir=/tmp creates=$ldap_create_sudo_master_done
+  when: ldap_include_create_sudo_master
   tags: 
     - ldap
     - auth
