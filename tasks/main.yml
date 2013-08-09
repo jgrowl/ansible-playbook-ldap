@@ -1,13 +1,13 @@
 ---
 
 - name: Make an ansible directory for remembering what we previously run
-  file: path=$auth_dir state=directory owner=root group=root
+  file: path=$ldap_done_dir state=directory owner=root group=root
   tags: 
     - ldap
     - auth
 
 - name: install ldap packages
-  action: apt pkg=$item state=installed
+  apt: pkg=$item state=installed
   with_items:
     - slapd 
     - ldap-utils
@@ -18,6 +18,8 @@
 
 - name: Configure slapd
   dpkg_reconfigure: pkg=slapd answers='$FILE(files/dpkg-reconfigure/slapd)'
+
+- include: load-schema.yml
 
 - name: ensure ldapscripts.conf exists
   template: src=templates/etc/ldapscripts/ldapscripts.conf.j2 dest=/etc/ldapscripts/ldapscripts.conf owner=root group=root

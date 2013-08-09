@@ -1,7 +1,0 @@
-# For kerberised ssh
-#- name: ensure sshd_config exists
-#  template: src=templates/etc/ssh/sshd_config.j2 dest=/etc/ssh/sshd_config owner=root group=root
-
-#sudo kadmin.local -q "addprinc -randkey host/neo.danbishop.org"
-#sudo kadmin.local -q "ktadd host/neo.danbishop.org"
-#sudo service ssh reload
