@@ -28,7 +28,7 @@
       slapd/no_configuration: false
       slapd/move_old_database: true 
       slapd/dump_database_destdir: /var/backups/slapd-VERSION
-      slapd/purge_database: true 
+      slapd/purge_database: false
       slapd/domain: $ldap_host
       slapd/backend: HDB
       slapd/dump_database: when needed
