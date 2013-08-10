@@ -41,7 +41,7 @@
     - ldap
     - auth
 
-- name: ldap | ensure ldapscripts.conf exists
+- name: ldap | Install add user template
   template: src=root/etc/ldapscripts/ldapadduser.template.j2 dest=/etc/ldapscripts/ldapadduser.template owner=root group=root
   tags: 
     - ldap
