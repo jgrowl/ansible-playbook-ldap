@@ -15,3 +15,4 @@ ldap_create_autofs_done: $ldap_done_dir/create-autofs
 ldap_create_automount_done: $ldap_done_dir/create-automount
 ldap_create_sudo_done: $ldap_done_dir/create-sudo
 ldap_create_sudo_master_done: $ldap_done_dir/create-sudo-master
+ldap_slapd_dpkg_reconfigure_done: $ldap_done_dir/slapd-dpkg-reconfigure-done
