@@ -41,6 +41,12 @@
     - ldap
     - auth
 
+- name: ldap | ensure ldapscripts.conf exists
+  template: src=root/etc/ldapscripts/ldapadduser.template.j2 dest=/etc/ldapscripts/ldapadduser.template owner=root group=root
+  tags: 
+    - ldap
+    - auth
+
 - name: ldap | ensure ldap.secret exists
   template: src=root/etc/ldap.secret.j2 dest=/etc/ldap.secret owner=root group=root mode=0400
   tags: 
