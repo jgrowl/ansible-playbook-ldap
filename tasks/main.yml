@@ -36,7 +36,7 @@
       slapd/domain: $ldap_host
       slapd/backend: HDB
       slapd/dump_database: when needed
-  when: ldap_slapd_already_configured.stdout.find('found') != -1
+  when: ldap_slapd_already_configured.stdout.find('found') == -1
 
 - name: ldap | Ugly hack to make sure the slapd reconfigure does not get run more than once
   shell: touch $ldap_slapd_dpkg_reconfigure_done creates=$ldap_slapd_dpkg_reconfigure_done
